@@ -3,3 +3,5 @@ node_modules/*
 .vscode
 yarn-error*
 ormconfig.json
+tmp/*
+!tmp/.gitkeep
