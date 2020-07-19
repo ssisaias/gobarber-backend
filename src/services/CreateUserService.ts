@@ -1,6 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { getRepository } from 'typeorm';
+import { hash } from 'bcryptjs';
 import User from '../models/Users';
+import AppError from '../errors/AppError';
 
 interface Request {
   name: string;
@@ -17,13 +19,15 @@ class CreateUserService {
     });
 
     if (checkUserExists) {
-      throw new Error('Email already in use');
+      throw new AppError('Email already in use');
     }
+
+    const hashedPassword = await hash(password, 7);
 
     const user = usersRepository.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     await usersRepository.save(user);
