@@ -5,8 +5,10 @@ import Appointment from '../models/Appointment';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
+import ensureAuthenticated from '../middlewares/ensureAuthentication';
 
 const appointmentsRouter = Router();
+appointmentsRouter.use(ensureAuthenticated)
 
 appointmentsRouter.post('/', async (request, response) => {
   try {
